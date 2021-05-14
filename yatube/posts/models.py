@@ -9,6 +9,9 @@ class Group(models.Model):
     slug = models.SlugField('Адрес', unique=True)
     description = models.TextField('Описание', max_length=2000)
 
+    class Meta:
+        ordering = ('-pub_date',)
+
     def __str__(self):
         return self.title
 
@@ -19,5 +22,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="posts")
     group = models.ForeignKey('Group', on_delete=models.SET_NULL,
-                              related_name="group",
+                              related_name="posts",
                               blank=True, null=True)
+
+    def __str__(self):
+        return self.text
